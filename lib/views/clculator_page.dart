@@ -54,47 +54,45 @@ class _CalculatorAppState extends State<CalculatorApp> {
 
   //widget for result
   Widget resultWidget() {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: Color.fromARGB(255, 150, 150, 150), width: 1),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: const EdgeInsets.all(20),
-              alignment: Alignment.centerRight,
-              child: Text(userInput,
-                  style: const TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                  )),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                  color: Color.fromARGB(255, 150, 150, 150), width: 1),
+              borderRadius: BorderRadius.circular(10),
             ),
+            padding: const EdgeInsets.all(20),
+            alignment: Alignment.centerRight,
+            child: Text(userInput,
+                style: const TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                )),
           ),
-          SizedBox(height: 10),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: Color.fromARGB(255, 150, 150, 150), width: 1),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: const EdgeInsets.all(10),
-              alignment: Alignment.centerRight,
-              child: Text(result,
-                  style: const TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                  )),
-            ),
-          )
-        ],
-      ),
+        ),
+        SizedBox(height: 10),
+        // Padding(
+        //   padding: const EdgeInsets.all(8.0),
+        //   child: Container(
+        //     decoration: BoxDecoration(
+        //       border: Border.all(
+        //           color: Color.fromARGB(255, 150, 150, 150), width: 1),
+        //       borderRadius: BorderRadius.circular(10),
+        //     ),
+        //     padding: const EdgeInsets.all(10),
+        //     alignment: Alignment.centerRight,
+        //     child: Text(result,
+        //         style: const TextStyle(
+        //           fontSize: 50,
+        //           fontWeight: FontWeight.bold,
+        //         )),
+        //   ),
+        // )
+      ],
     );
   }
 
