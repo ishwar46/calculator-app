@@ -50,8 +50,6 @@ class _CalculatorAppState extends State<CalculatorApp> {
     );
   }
 
-//widget for result
-
   //widget for result
   Widget resultWidget() {
     return Column(
@@ -62,7 +60,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(
-                  color: Color.fromARGB(255, 150, 150, 150), width: 1),
+                  color: const Color.fromARGB(255, 150, 150, 150), width: 1),
               borderRadius: BorderRadius.circular(10),
             ),
             padding: const EdgeInsets.all(20),
@@ -75,23 +73,6 @@ class _CalculatorAppState extends State<CalculatorApp> {
           ),
         ),
         SizedBox(height: 10),
-        // Padding(
-        //   padding: const EdgeInsets.all(8.0),
-        //   child: Container(
-        //     decoration: BoxDecoration(
-        //       border: Border.all(
-        //           color: Color.fromARGB(255, 150, 150, 150), width: 1),
-        //       borderRadius: BorderRadius.circular(10),
-        //     ),
-        //     padding: const EdgeInsets.all(10),
-        //     alignment: Alignment.centerRight,
-        //     child: Text(result,
-        //         style: const TextStyle(
-        //           fontSize: 50,
-        //           fontWeight: FontWeight.bold,
-        //         )),
-        //   ),
-        // )
       ],
     );
   }
@@ -99,18 +80,22 @@ class _CalculatorAppState extends State<CalculatorApp> {
   //button widget
   Widget buttonWidget() {
     return Container(
-        padding: EdgeInsets.all(10),
-        color: Colors.white,
-        child: GridView.builder(
-            itemCount: buttonList.length,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-            ),
-            itemBuilder: (context, index) {
-              return button(buttonList[index]);
-            }));
+      padding: const EdgeInsets.all(10),
+      color: Colors.white,
+      child: GridView.builder(
+        clipBehavior: Clip.hardEdge,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: buttonList.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4,
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+        ),
+        itemBuilder: (context, index) {
+          return buttons(buttonList[index]);
+        },
+      ),
+    );
   }
 
   getColor(String text) {
@@ -151,26 +136,28 @@ class _CalculatorAppState extends State<CalculatorApp> {
   }
 
   //button widget
-  Widget button(String text) {
-    return InkWell(
+  Widget buttons(String text) {
+    return Material(
+      color: getBgColor(text),
+      borderRadius: BorderRadius.circular(10),
+      elevation: 5,
+      shadowColor: Colors.grey.withOpacity(0.5),
+      child: InkWell(
         onTap: () {
           setState(() {
-            handleButtonPress(text);
+            whenButtonPressed(text);
           });
         },
+        borderRadius: BorderRadius.circular(10),
+        hoverColor: Colors.grey.withOpacity(0.2),
         child: Container(
-          alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: getBgColor(text),
+            border: Border.all(
+                color: const Color.fromARGB(255, 224, 224, 224), width: 1),
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 1,
-                blurRadius: 5,
-              ),
-            ],
           ),
+          padding: const EdgeInsets.all(16),
+          alignment: Alignment.center,
           child: Text(
             text,
             style: TextStyle(
@@ -179,30 +166,25 @@ class _CalculatorAppState extends State<CalculatorApp> {
               fontWeight: FontWeight.bold,
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
-  handleButtonPress(String text) {
+  whenButtonPressed(String text) {
     if (text == 'C') {
       userInput = '';
       result = '0';
-      return;
-    }
-
-    if (text == '=') {
+    } else if (text == '=') {
       result = calculate();
-      userInput = result;
-      if (userInput.endsWith(".0")) {
-        userInput = userInput.replaceAll('.0', '');
+      userInput = result.replaceAll('.0', '');
+    } else if (text == '<-') {
+      if (userInput.isNotEmpty) {
+        userInput = userInput.substring(0, userInput.length - 1);
       }
-
-      if (result.endsWith(".0")) {
-        result = result.replaceAll('.0', '');
-      }
-
-      return;
+    } else {
+      userInput += text;
     }
-    userInput = userInput + text;
   }
 
   String calculate() {
