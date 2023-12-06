@@ -193,7 +193,7 @@ class _CalculatorAppState extends State<CalculatorApp> {
       var evaluation = exp.evaluate(EvaluationType.REAL, ContextModel());
       return evaluation.toString();
     } catch (e) {
-      return 'Error';
+      return 'Input a valid mathematical expression.';
     }
   }
 }
